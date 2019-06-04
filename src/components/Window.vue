@@ -124,7 +124,7 @@
 
 <template>
   <div class="drag-box">
-    <div class="x-window" v-x-drag="dragConfig">
+    <div class="x-window" v-x-drag="dragConfig" :disabled-drag="disabledDrag" :disabled-resize="disabledResize">
       <div class="app-window-resize resize-top-left"></div>
       <div class="app-window-resize resize-top-right"></div>
       <div class="app-window-resize resize-bottom-left"></div>
@@ -145,66 +145,77 @@
 </template>
 
 <script>
-export default {
-  name: 'Window',
-  data () {
-    return {
-      dragConfig: {
-        // 拖拽配置
-        drag: {
-          // 是否启用拖拽
-          enable: true,
-          // 指定拖拽把手元素，支持一个或多个把手
-          handler: ['.x-window-title', '.x-window-bar'],
-          // 拖拽不同阶段 className
-          class: {
-            start: 'x-drag-start',
-            move: 'x-drag-move',
-            done: 'x-drag-done',
-            main: 'x-drag'
-          },
-          // 回调
-          callback: {
-            start: null,
-            move: null,
-            done: (style) => {
-              console.log('drag done', style)
+  export default {
+    name: 'Window',
+    props: {
+      disabledDrag: {
+        type: Boolean,
+        default: false
+      },
+      disabledResize: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data () {
+      return {
+        dragConfig: {
+          // 拖拽配置
+          drag: {
+            // 是否启用拖拽
+            enable: true,
+            // 指定拖拽把手元素，支持一个或多个把手
+            handler: ['.x-window-title', '.x-window-bar'],
+            // 拖拽不同阶段 className
+            class: {
+              start: 'x-drag-start',
+              move: 'x-drag-move',
+              done: 'x-drag-done',
+              main: 'x-drag'
+            },
+            // 回调
+            callback: {
+              start: null,
+              move: null,
+              done: (style) => {
+                console.log('drag done', style)
+              }
             }
-          }
-        },
-        // 缩放配置
-        resize: {
-          // 是否启用缩放
-          enable: true,
-          // 指定缩放把手元素，支持一个或多个把手
-          handler: {
-            'top-left': '.resize-top-left',
-            'top-right': '.resize-top-right',
-            'bottom-left': '.resize-bottom-left',
-            'bottom-right': '.resize-bottom-right',
-            'top-border': '.resize-top-border',
-            'right-border': '.resize-right-border',
-            'bottom-border': '.resize-bottom-border',
-            'left-border': '.resize-left-border'
           },
-          // 缩放不同阶段 className
-          class: {
-            start: 'x-resize-start',
-            move: 'x-resize-move',
-            done: 'x-resize-done',
-            main: 'x-resize'
-          },
-          // 回调
-          callback: {
-            start: null,
-            move: null,
-            done: (style) => {
-              console.log('resize done', style)
+          // 缩放配置
+          resize: {
+            // 是否启用缩放
+            enable: true,
+            // 指定缩放把手元素，支持一个或多个把手
+            handler: {
+              'top-left': '.resize-top-left',
+              'top-right': '.resize-top-right',
+              'bottom-left': '.resize-bottom-left',
+              'bottom-right': '.resize-bottom-right',
+              'top-border': '.resize-top-border',
+              'right-border': '.resize-right-border',
+              'bottom-border': '.resize-bottom-border',
+              'left-border': '.resize-left-border'
+            },
+            // 缩放不同阶段 className
+            class: {
+              start: 'x-resize-start',
+              move: 'x-resize-move',
+              done: 'x-resize-done',
+              main: 'x-resize'
+            },
+            // 回调
+            callback: {
+              start: null,
+              move: null,
+              done: (style) => {
+                console.log('resize done', style)
+              }
             }
           }
         }
       }
     }
   }
-}
 </script>
+
